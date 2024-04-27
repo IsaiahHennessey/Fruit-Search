@@ -85,8 +85,8 @@ const fruit = [
 
 function search(str) {
   let results = [];
-  const val = str.toLowerCase();
-  const filterFruit = fruit.filter((x) => x.toLowerCase().includes(val));
+  const val = str.trim();
+  const filterFruit = fruit.filter((x) => x.includes(val));
   results = filterFruit;
   console.log("results", results);
   return results;
@@ -101,15 +101,31 @@ function searchHandler(e) {
 function showSuggestions(results, inputVal) {
   suggestions.innerHTML = "";
   if (results.length > 0) {
-    for (i = 0; i < results.length; i++) {
+    for (let i = 0; i < results.length; i++) {
       suggestions.innerHTML += `<li>${results[i]}</li>`;
     }
+
+    suggestions.addEventListener("mouseover", function () {
+      selectedIndex = i;
+      highlightSelected();
+    });
     suggestions.classList.add("has-suggestions");
+    highlightSelected();
   } else {
     results = [];
     suggestions.innerHTML = "";
     suggestions.classList.remove("has-suggestions");
   }
+}
+function highlightSelected() {
+  const suggestionsList = suggestions.querySelectorAll("li");
+  suggestionsList.forEach((suggestion, index) => {
+    if (index === selectedIndex) {
+      suggestions.classList.add("selected");
+    } else {
+      suggestion.classList.remove("selected");
+    }
+  });
 }
 
 function useSuggestion(e) {
