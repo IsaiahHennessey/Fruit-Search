@@ -86,7 +86,7 @@ const fruit = [
 function search(str) {
   let results = [];
   const val = str.toLowerCase();
-  const filterFruit = fruit.filter((x) => x.includes(str));
+  const filterFruit = fruit.filter((x) => x.toLowerCase().includes(val));
   results = filterFruit;
   console.log("results", results);
   return results;
